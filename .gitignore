@@ -1,3 +1,10 @@
+build/
+coverage/
+node_modules/
+.idea/
+.backup/
+*.bak
+
 lib-cov
 *.seed
 *.log

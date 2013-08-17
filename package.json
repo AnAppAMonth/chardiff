@@ -1,0 +1,42 @@
+{
+    "name": "chardiff",
+
+    "version": "0.0.1",
+
+    "description": "Character-level text diffs respecting line boundaries",
+
+    "author": "Feng Qiu <feng@ban90.com>",
+
+    "license": "MIT",
+
+    "keywords": ["character", "char", "diff", "text", "string", "column", "line"],
+
+    "main" : "./index.js",
+
+    "scripts": {
+        "pretest": "jshint --verbose --config test/jshint.json ./*js test/*js",
+        "test": "make test"
+    },
+
+    "dependencies": {
+        "diff": "1.0.x"
+    },
+
+    "devDependencies": {
+        "mocha": "*",
+        "jshint": "*"
+    },
+
+    "engines": {
+        "node": ">=0.4.x"
+    },
+
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/halfninety/chardiff.git"
+    },
+
+    "bugs": {
+        "url": "https://github.com/halfninety/chardiff/issues"
+    }
+}
