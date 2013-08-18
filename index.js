@@ -171,7 +171,7 @@ function _match(result, lines, touched, t) {
 
 function chardiff(a, b) {
     var i, j, k,
-        t, obj,
+        t, obj, arr,
         result = [];
 
     // First diff the lines
@@ -182,11 +182,14 @@ function chardiff(a, b) {
         if (lineChg === null) { continue; }
 
         if (typeof lineChg === 'string') {
-            // Unchanged.
-            result.push({
-                type: '=',
-                value: lineChg
-            });
+            // Unchanged. Split it into single line entries.
+            arr = lineChg.match(/\n|.+\n?/g) || [''];
+            for (j = 0; j < arr.length; j++) {
+                result.push({
+                    type: '=',
+                    value: arr[j]
+                });
+            }
         } else if (typeof lineChg[0] === 'number') {
             // Added or removed.
             t = lineChg[0];
