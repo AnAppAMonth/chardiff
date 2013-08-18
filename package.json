@@ -1,7 +1,7 @@
 {
     "name": "chardiff",
 
-    "version": "0.0.1",
+    "version": "0.1.0",
 
     "description": "Character-level text diffs respecting line boundaries",
 
@@ -14,7 +14,7 @@
     "main" : "./index.js",
 
     "scripts": {
-        "pretest": "jshint --verbose --config test/jshint.json ./*js test/*js",
+        "pretest": "jshint --verbose --config test/jshint.json ./*js test/*js example/*js",
         "test": "make test"
     },
 
