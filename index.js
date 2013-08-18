@@ -97,7 +97,7 @@ function _getScore(a, b) {
         len2 = 0,
         matched = 0,
         parts = 0,
-        length;
+        length, score;
 
     for (var i = 0; i < diffArray.length; i++) {
         length = diffArray[i].value.length;
@@ -122,12 +122,24 @@ function _getScore(a, b) {
     if (parts > 1000) {
         parts = 1000;
     }
-    return matched * 2 / (len1 + len2) * (1000 - parts) / 1000;
+    // We use a `Number` object so that we can attach additional information to be
+    // used by `_aboveThreshold()`.
+    /* jshint -W053 */
+    score = new Number(matched * 2 / (len1 + len2) * (1000 - parts) / 1000);
+    score.matched = matched;
+    score.len1 = len1;
+    score.len2 = len2;
+    return score;
 }
 
 // Determines whether a score is above the threshold.
 function _aboveThreshold(score) {
-    return score >= 0.5;
+    if (score >= 0.45) {
+        return true;
+    } else if (score >= 0.25 && score.matched / Math.min(score.len1, score.len2) >= 0.75) {
+        return true;
+    }
+    return false;
 }
 
 // Try to match the first line in `lines[t]` with lines in `touched[t]`.

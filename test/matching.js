@@ -197,7 +197,7 @@ describe('Matching of lines:', function(){
                 "    idx += 1;\n" +
                 "}",
             result = chardiff(a, b);
-        var target = [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 9], [8, 10], [10, 16], [11, 18]];
+        var target = [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 9], [8, 10], [9, 11], [10, 16], [11, 18]];
 
         it('should have exactly one line in each entry', function() {
             assert(checkOneLine(result));
