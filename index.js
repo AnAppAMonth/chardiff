@@ -79,7 +79,15 @@ function _convertResult(diffArray) {
 
 // Calculates the similarity score between two strings.
 function _getScore(a, b) {
-    // First handle special cases.
+    // Remove the trailing line break if existed.
+    if (a[a.length - 1] === '\n') {
+        a = a.substring(0, a.length - 1);
+    }
+    if (b[b.length - 1] === '\n') {
+        b = b.substring(0, b.length - 1);
+    }
+
+    // Handle special cases.
     if (a === '') {
         return b === '' ? 1 : 0;
     }
@@ -142,13 +150,13 @@ function _match(result, lines, touched, t) {
         for (i = 0; i < idx; i++) {
             obj = {};
             obj.type = types[1-t];
-            obj[props[1-t]] = lines[1-t].shift() + '\n';
+            obj[props[1-t]] = lines[1-t].shift();
             result.push(obj);
         }
         obj = {};
         obj.type = '*';
-        obj[props[0]] = lines[0].shift() + '\n';
-        obj[props[1]] = lines[1].shift() + '\n';
+        obj[props[0]] = lines[0].shift();
+        obj[props[1]] = lines[1].shift();
         // Calculate char-level diffs.
         obj.diff = _convertResult(stringDiff.diffChars(obj[props[0]], obj[props[1]]));
         result.push(obj);
@@ -156,7 +164,7 @@ function _match(result, lines, touched, t) {
         // No match found, remove `lines[t][0]`.
         obj = {};
         obj.type = types[t];
-        obj[props[t]] = lines[t].shift() + '\n';
+        obj[props[t]] = lines[t].shift();
         result.push(obj);
     }
 }
@@ -210,7 +218,7 @@ function chardiff(a, b) {
             // and repeat this process.
             var textLeft = lineChg[0],
                 textRight = lineChg[1],
-                lines = [textLeft.split('\n'), textRight.split('\n')],
+                lines = [textLeft.match(/\n|.+\n?/g), textRight.match(/\n|.+\n?/g)],
                 pos, matches, done;
 
             while(1) {
@@ -274,7 +282,7 @@ function chardiff(a, b) {
                                     t = chg[0];
                                     obj = {};
                                     obj.type = types[t];
-                                    obj[props[t]] = lines[t].shift() + '\n';
+                                    obj[props[t]] = lines[t].shift();
                                     result.push(obj);
                                 }
                             }
@@ -322,8 +330,8 @@ function chardiff(a, b) {
 
                 // This round is done, see if we need to do the next round.
                 if (lines[0].length > 0 && lines[1].length > 0) {
-                    textLeft = lines[0].join('\n');
-                    textRight = lines[1].join('\n');
+                    textLeft = lines[0].join('');
+                    textRight = lines[1].join('');
                 } else {
                     break;
                 }
@@ -334,7 +342,7 @@ function chardiff(a, b) {
                 for (j = 0; j < lines[t].length; j++) {
                     obj = {};
                     obj.type = types[t];
-                    obj[props[t]] = lines[t][j] + '\n';
+                    obj[props[t]] = lines[t][j];
                     result.push(obj);
                 }
             }
