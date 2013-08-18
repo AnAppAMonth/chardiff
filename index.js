@@ -269,12 +269,14 @@ function chardiff(a, b) {
                         // Added or removed.
                         if (j === 0) {
                             matches = chg[1].match(/\n/g);
-                            for (k = 0; k < matches.length; k++) {
-                                t = chg[0];
-                                obj = {};
-                                obj.type = types[t];
-                                obj[props[t]] = lines[t].shift() + '\n';
-                                result.push(obj);
+                            if (matches) {
+                                for (k = 0; k < matches.length; k++) {
+                                    t = chg[0];
+                                    obj = {};
+                                    obj.type = types[t];
+                                    obj[props[t]] = lines[t].shift() + '\n';
+                                    result.push(obj);
+                                }
                             }
                         } else {
                             // Search for the first line break in chg[1].
